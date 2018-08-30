@@ -8,11 +8,9 @@ sub welcome {
     my $self = shift;
 
     $self->app->log->info('Controller::Example.welcome');
-    $self->app->log->info( 'Sdc::Controller::Example.welcome: Helper VISUALDB:'
-          . Dumper( $self->VISUALDB ) );
 
     # Render template "example/welcome.html.ep" with message
-    $self->render( msg => 'Default Controller', msg2 => 'Muziek Controller' );
+    $self->render( msg => 'Default Controller', msg2 => 'Websocket client' );
 }
 
 # The websocket  server

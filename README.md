@@ -1,4 +1,4 @@
-#  Mojolicious appliction
+#  Mojolicious application
 
 Demonstrate a Perl Mojolicious echo server application with websockets. 
 
@@ -8,7 +8,9 @@ Websockets timeout very quickly. This is also handled in this app.
 
 ## Create a new mojolicious application
 
-Generate a new application `mojo generate app sdc`.
+Generate a new application 
+
+`mojo generate app sdc`.
 
 Controler `example` is created in package `lib\Sdc\Controller\Example.pm`.
 
@@ -20,7 +22,7 @@ Create the end-point in controller `example`
 Open file `Example.pm` and past this code.
 
 A HTML client with javascript, will generate keepalive request. This means, in this example, that the length of 
-the message is zero.
+the message is zero and will not send back to the client.
 
 ```
 sub echo {
@@ -172,3 +174,27 @@ Add the code in file `Sdb.pm`
 ```
 $r->get('/client')->to( controller => 'example', action => 'client' );
 ```
+
+### Configure SSL for hypnotoad
+
+Open the config file `sdc.conf` and add:
+
+```
+{
+	perldoc => 1,
+	secrets => ['a0f4bbe99524090791bfd31483ad27dd221ac0e2'],
+
+	hypnotoad => {
+    	listen  => ['https://hp-probook:9443?cert=ssl/hp-probook.cert.pem&key=ssl/hp-probook.key.pem'],
+    	workers => 5
+  	}
+}
+```
+
+My self-signed ssl certificates can be found in the `ssl` directory.
+
+#Start the application
+
+Leave server running on the foreground `hypnotoad script/sdc -f`
+
+Test the application by browsing to `https://hp-probook:9443`

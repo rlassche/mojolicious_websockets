@@ -13,5 +13,4 @@
   % }
 </p>
 <h2><%= $msg2 %></h2>
-<p><%= link_to 'Artiest' => '/muziek/artiest' %></p>
-<p><%= link_to 'Song' => '/muziek/song' %></p>
+<p><%= link_to 'Websocket client' => '/client' %></p>
