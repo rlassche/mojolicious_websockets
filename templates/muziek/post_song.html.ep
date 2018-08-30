@@ -1,0 +1,7 @@
+% layout 'default';
+% title 'Post Song';
+<h2>POST</h2>
+<p>
+  This page was generated from the template "templates/muziek/post_song.html.ep"
+  and the layout "templates/layouts/default.html.ep",
+</p>

@@ -1,0 +1,17 @@
+% layout 'default';
+% title 'Welcome';
+<h2><%= $msg %></h2>
+<p>This is template "templates/example/welcome.html.ep"</p>
+<p>Layout "templates/layouts/default.html.ep"</p>
+
+<p>Reload page: <%= link_to 'click here' => url_for %></p>
+
+
+<p>Static page: <%= link_to 'here' => '/index.html' %></p>
+  % if (config 'perldoc') {
+<p>    Documentation: <%= link_to 'here' => '/perldoc' %></p>
+  % }
+</p>
+<h2><%= $msg2 %></h2>
+<p><%= link_to 'Artiest' => '/muziek/artiest' %></p>
+<p><%= link_to 'Song' => '/muziek/song' %></p>

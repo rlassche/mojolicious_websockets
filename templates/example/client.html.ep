@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>WebSocket Client</title>
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+    ></script>
+    <script type="text/javascript" src="/js/ws.js"></script>
+    <style type="text/css">
+      textarea {
+          width: 40em;
+          height:10em;
+      }
+    </style>
+  </head>
+<body>
+
+<h1>Mojolicious + WebSocket</h1>
+
+<p><input type="text" id="msg" /></p>
+<textarea id="log" readonly></textarea>
+
+</body>
+</html>
