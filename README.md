@@ -4,7 +4,7 @@ Demonstrate a Perl Mojolicious echo server application with websockets (=backend
 
 Frontend is a html/javascript web client with SSL connection. 
 
-#Code
+# Code
 
 Controler `example` is in package `lib\Sdc\Controller\Example.pm`.
 
@@ -27,11 +27,11 @@ Java script code in `public\js\ws.js`
 
 ### Configure SSL for hypnotoad
 
-Open the config file `sdc.conf` and add:
+Check config file `sdc.conf`.
 
-My self-signed ssl certificates can be found in the `ssl` directory.
+My self-signed ssl certificates can be found in the `ssl` directory and should be replaced with you own certicicates for testing purpose.
 
-#Start the application
+# Start the application
 
 Leave server running on the foreground `hypnotoad script/sdc -f`
 
