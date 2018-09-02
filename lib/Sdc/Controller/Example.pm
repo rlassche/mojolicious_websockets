@@ -27,13 +27,6 @@ sub echo {
     $self->app->log->info( sprintf 'Client connected: %s', $id );
 
     #$self->app->log->info("CONNECT $id");
-    $self->on(
-        connect => sub {
-            my $id = sprintf "%s", $self->tx;
-            $self->app->log->debug("##### Client connect does not work???: $id");
-            $clients->{$id} = $self->tx;
-        }
-    );
 
     $self->on(
         message => sub {
@@ -70,21 +63,6 @@ sub echo {
         }
     );
 
-    $self->on(
-        close => sub {
-            my $id = sprintf "%s", $self->tx;
-            $self->app->log->debug("Client close: $id");
-            delete $clients->{ $self->tx };
-        }
-    );
-
-    $self->on(
-        error => sub {
-            my $id = sprintf "%s", $self->tx;
-            $self->app->log->debug("Client error: $id");
-            delete $clients->{ $self->tx };
-        }
-    );
 }
 
 # Websocket client
