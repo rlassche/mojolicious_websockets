@@ -3,6 +3,8 @@ use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
 use DateTime;
 
+my $clients = {};
+
 # This action will render a template
 sub welcome {
     my $self = shift;
@@ -16,21 +18,71 @@ sub welcome {
 # The websocket  server
 sub echo {
     my $self = shift;
+    my $id = sprintf "%s", $self->tx;
+    $clients->{$id} = $self->tx;
+
+    # Increase inactivity timeout for connection a bit
+    $self->inactivity_timeout(300);
+
+    $self->app->log->info( sprintf 'Client connected: %s', $id );
+
+    #$self->app->log->info("CONNECT $id");
+    $self->on(
+        connect => sub {
+            my $id = sprintf "%s", $self->tx;
+            $self->app->log->debug("##### Client connect does not work???: $id");
+            $clients->{$id} = $self->tx;
+        }
+    );
+
     $self->on(
         message => sub {
             my ( $self, $msg ) = @_;
-            $self->app->log->info( 'Controller::Example.echo on: msg=' . $msg );
+            my $id = sprintf "%s", $self->tx;
+
             if ( length($msg) > 0 ) {
+                $self->app->log->info( "client $id, msg=->" . $msg . '<-' );
                 my $dt = DateTime->now( time_zone => 'Europe/Amsterdam' );
-                $self->send(
-                    {
-                        json => {
-                            hms  => $dt->hms,
-                            text => $msg
+                for ( keys %$clients ) {
+                    $id = sprintf "%s", $_;
+                    $self->app->log->info("Sending to client ($id)");
+
+                    $clients->{$_}->send(
+                        {
+                            json => {
+                                hms  => $dt->hms,
+                                text => $msg
+                            }
                         }
-                    }
-                );
+                    );
+                }
             }
+            else {
+                #$self->app->log->info( "Ping");
+            }
+        }
+    );
+    $self->on(
+        finish => sub {
+            my $id = sprintf "%s", $self->tx;
+            $self->app->log->debug("Client disconnected: $id");
+            delete $clients->{ $self->tx };
+        }
+    );
+
+    $self->on(
+        close => sub {
+            my $id = sprintf "%s", $self->tx;
+            $self->app->log->debug("Client close: $id");
+            delete $clients->{ $self->tx };
+        }
+    );
+
+    $self->on(
+        error => sub {
+            my $id = sprintf "%s", $self->tx;
+            $self->app->log->debug("Client error: $id");
+            delete $clients->{ $self->tx };
         }
     );
 }
@@ -39,7 +91,7 @@ sub echo {
 sub client {
     my $self = shift;
 
-    $self->app->log->info('Controller::Example.client');
+    $self->app->log->info('client');
 
     # Render template "example/client.html.ep" with message
     $self->render( msg => 'Websocket client' );

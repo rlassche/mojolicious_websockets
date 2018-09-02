@@ -197,4 +197,6 @@ My self-signed ssl certificates can be found in the `ssl` directory.
 
 Leave server running on the foreground `hypnotoad script/sdc -f`
 
+Server log in `/tmp/mojolicious.log`.
+
 Test the application by browsing to `https://hp-probook:9443`
