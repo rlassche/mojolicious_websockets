@@ -47,7 +47,7 @@ If you are interested in an Angular client for connecting to this websocket serv
 
 # Use the cli application
 
-When the web application is running, you can start the CLI: `perl client.pl`. 
+When the web application is running, you can start the CLI: `perl client.pl  'a message to send'`. 
 
 A message will send to the server and result will be displayed.
 

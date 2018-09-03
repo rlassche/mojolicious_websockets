@@ -5,6 +5,10 @@ use Data::Dumper;
 Log::Log4perl::init('/usr/lib/cgi-bin/log4perl.conf');
 my $logger = Log::Log4perl->get_logger();
 
+if( @ARGV == 0 ) {
+	die "usage: $0 message_to_send";
+}
+
 sub SendMsg2Websocket {
     my ($params) = @_;
 
@@ -78,5 +82,5 @@ sub SendMsg2Websocket {
 }
 
 # Send a message to the websocket and wait for the response send by the server
-my $rv = SendMsg2Websocket( { MESSAGE => 'Send to the websocket' } );
+my $rv = SendMsg2Websocket( { MESSAGE =>  $ARGV[0] } );
 print Dumper($rv);
