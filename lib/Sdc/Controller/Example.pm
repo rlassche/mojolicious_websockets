@@ -57,8 +57,10 @@ sub echo {
     );
     $self->on(
         finish => sub {
+			my( $self, $code, $reason ) = @_ ;
+
             my $id = sprintf "%s", $self->tx;
-            $self->app->log->debug("Client disconnected: $id");
+            $self->app->log->info("Client disconnected: $id");
             delete $clients->{ $self->tx };
         }
     );
