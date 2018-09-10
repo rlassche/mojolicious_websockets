@@ -34,6 +34,7 @@ $(function () {
         $('#msg').val('');
       } else {
         log('Connection with server is lost');
+    	socketinit();
       }
     }
   });
