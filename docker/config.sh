@@ -1,0 +1,2 @@
+DOCKERIMG=srv_mojolicious
+DOCKERPORT=9090
