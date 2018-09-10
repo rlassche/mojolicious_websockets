@@ -1,7 +1,7 @@
 package Sdc::Controller::Example;
 use Mojo::Base 'Mojolicious::Controller';
 use Data::Dumper;
-use DateTime;
+#use DateTime;
 
 my $clients = {};
 
@@ -35,7 +35,10 @@ sub echo {
 
             if ( length($msg) > 0 ) {
                 $self->app->log->info( "client $id, msg=->" . $msg . '<-' );
-                my $dt = DateTime->now( time_zone => 'Europe/Amsterdam' );
+				# DateTime could not be installed in docker???
+                #my $dt = DateTime->now( time_zone => 'Europe/Amsterdam' );
+				my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = 
+															localtime();
                 for ( keys %$clients ) {
                     $id = sprintf "%s", $_;
                     $self->app->log->info("Sending to client ($id)");
@@ -43,7 +46,8 @@ sub echo {
                     $clients->{$_}->send(
                         {
                             json => {
-                                hms  => $dt->hms,
+                                hms  => sprintf( "%02d:%02d:%02d", 
+												 $hour,$min,$sec),
                                 text => $msg
                             }
                         }
@@ -67,11 +71,9 @@ sub echo {
 
 }
 
-# Websocket client
+# HTML page for communicating with the Websocket client
 sub client {
     my $self = shift;
-
-    $self->app->log->info('client');
 
     # Render template "example/client.html.ep" with message
     $self->render( msg => 'Websocket client' );

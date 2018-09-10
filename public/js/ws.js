@@ -6,12 +6,13 @@ $(function () {
   console.log('Top of function');
   var timerID = 0;
   function keepAlive() {
-    var timeout = 14000;
+    // 14000 was the default
+    var timeout = 140000;
     if (ws.readyState == ws.OPEN) {
       console.log('keep alive: ' + timerID++);
       ws.send('');
     } else {
-      console.log('CONNECTIN IS CLOSED!! ');
+      console.log('CONNECTION IS CLOSED!! ');
     }
     timerId = setTimeout(keepAlive, timeout);
   }
@@ -43,7 +44,12 @@ $(function () {
 
 function socketinit() {
   console.log('socketinit');
-  ws = new WebSocket('wss://hp-probook:9443/echo');
+
+  let o = window.location.origin;
+  let uri = o.replace( "http", "ws" ) ;
+  console.log( 'location.origin NEW: ' , uri )
+  //ws = new WebSocket('wss://hp-probook:9443/echo');
+  ws = new WebSocket( uri + '/echo' ) ;
   ws.onopen = function () {
     log('Connection opened');
   };
@@ -54,7 +60,9 @@ function socketinit() {
   };
   ws.onclose = function (evt) {
     log('onclose');
-    console.log('onclose, calling socketinit');
-    socketinit();
+    // Below was required, because of the frequent timeouts.
+    // NOW: not neede any more. Perl increased the timeout
+    //console.log('onclose, calling socketinit');
+    //socketinit();
   }
 }
