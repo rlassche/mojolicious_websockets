@@ -29,17 +29,24 @@ Java script code in `public\js\ws.js`
 
 ### Configure SSL for hypnotoad
 
-Check config file `sdc.conf`.
+Config file `sdc.conf` contains hypnotoad configuration.
 
-My self-signed ssl certificates can be found in the `ssl` directory and should be replaced with you own certicicates for testing purpose.
+* Server name
+Environment variable `MOJOSRV` is the hostname for the hypnotoad server.
+
+* Certificate names
+
+The self-signed ssl certificates can be found in the `ssl` directory and should be replaced with you own certicicates for testing purpose.
+
+`ssl/${MOJOSRV}.cert.pem` and `ssl/${MOJOSRV}.key.pem`
 
 # Start the web application
 
-Leave server running on the foreground `hypnotoad script/sdc -f`
+Start server in the backgrond `MOJOSRV=`hostname` hypnotoad script/sdc `
 
 Server log in `/tmp/mojolicious.log`: `tail -f /tmp/mojolicious.log`
 
-Test the application by browsing to `https://hp-probook:9443/client`
+Test the application by browsing to `https://${MOJOSRV}:9443/client`
 
 If you are interested in an Angular client for connecting to this websocket server, then check
 
