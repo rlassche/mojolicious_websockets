@@ -46,10 +46,10 @@ function socketinit() {
   console.log('socketinit');
 
   let o = window.location.origin;
-  let uri = o.replace( "http", "ws" ) ;
-  console.log( 'location.origin NEW: ' , uri )
-  //ws = new WebSocket('wss://hp-probook:9443/echo');
-  ws = new WebSocket( uri + '/echo' ) ;
+  let uri = o.replace("http", "ws");
+  console.log('location.origin NEW: ', uri)
+
+  ws = new WebSocket(uri + '/echo');
   ws.onopen = function () {
     log('Connection opened');
   };

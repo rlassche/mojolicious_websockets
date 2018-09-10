@@ -3,7 +3,6 @@ use Mojo::Base 'Mojolicious';
 
 #use Mojolicious::Lite;
 use Data::Dumper;
-use Database;
 
 # This method will run once at server start
 sub startup {

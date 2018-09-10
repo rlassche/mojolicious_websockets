@@ -27,7 +27,39 @@ The web page code is in template file `templates\example\client.html.ep`
 
 Java script code in `public\js\ws.js`
 
-### Configure SSL for hypnotoad
+### Apache proxy to hypnotoad server
+
+* Configure SSL in Apache2.
+
+* Configure hypnotoad to use non-secure port
+
+Star the hypnotoad server:
+
+```
+HYPNOLISTEN='http://*:9090' hypnotoad script/sdc
+```
+
+The hypnotoad server will run on port 9090 and the websocket uses the `ws` protocal.
+
+* Apache proxy configuration 
+
+The html page client:
+
+```
+ProxyPass /client "http://localhost:9090/client/"
+ProxyPassReverse /client "http://localhost:9090/client/"
+```
+
+
+```
+<Location "/echo">
+  ProxyPass "ws://localhost:9090/echo/"
+</Location>
+```
+
+
+
+### Configure SSL for hypnotoad standalone server
 
 Config file `sdc.conf` contains hypnotoad configuration.
 
