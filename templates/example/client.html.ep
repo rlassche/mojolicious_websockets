@@ -1,15 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>WebSocket Client</title>
     <script
       type="text/javascript"
       src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
     ></script>
+	<link rel="stylesheet" 
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
     <script type="text/javascript" src="/js/ws.js"></script>
     <style type="text/css">
       textarea {
           width: 40em;
-          height:10em;
+          height:20em;
       }
     </style>
   </head>
@@ -17,8 +21,20 @@
 
 <h1>Mojolicious + WebSocket</h1>
 
-<p><input type="text" id="msg" /></p>
-<textarea id="log" readonly></textarea>
+<form>
+	<div class="form-group">
+		<label for="author">Author</label>
+		<input class="form-control" type="text" id="author" required/>
+	</div>
+	<div class="form-group">
+		<label for="msg">Message</label>
+		<input class="form-control" type="text" id="msg" required/>
+	</div>
+	<div class="form-group">
+		<label for="log">Response</label>
+		<textarea id="log" class="form-control rounded-0" rows=15 readonly></textarea>
+	</div>
+</form>
 
 </body>
 </html>

@@ -28,30 +28,39 @@ sub echo {
 
     #$self->app->log->info("CONNECT $id");
 
+    #
+    # on.message:
+    # A message arrives in this websocket-server. 
+    # The message will be send to ALL clients!
+    #
     $self->on(
         message => sub {
+            # $msg is already in JSON format!
             my ( $self, $msg ) = @_;
+            # The client id
             my $id = sprintf "%s", $self->tx;
 
             if ( length($msg) > 0 ) {
-                $self->app->log->info( "client $id, msg=->" . $msg . '<-' );
+                $self->app->log->info( "on.mesage: client $id, msg=->" . $msg . '<-' );
 				# DateTime could not be installed in docker???
                 #my $dt = DateTime->now( time_zone => 'Europe/Amsterdam' );
-				my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = 
-															localtime();
+				#my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = 
+				#											localtime();
                 for ( keys %$clients ) {
                     $id = sprintf "%s", $_;
-                    $self->app->log->info("Sending to client ($id)");
+                    $self->app->log->info("on.message send: client: $id, msg: $msg");
 
-                    $clients->{$_}->send(
-                        {
-                            json => {
-                                hms  => sprintf( "%02d:%02d:%02d", 
-												 $hour,$min,$sec),
-                                text => $msg
-                            }
-                        }
-                    );
+                    $clients->{$_}->send( $msg ) ;
+                    #$clients->{$_}->send(
+                    #    {
+                    #        json => {
+                    #            #hms  => sprintf( "%02d:%02d:%02d", 
+								#				 $hour,#$min,$sec),
+                    #           author=> 'PERL',
+                    #           message => '$msg'
+                    #        }
+                    #    }
+                    #);
                 }
             }
             else {

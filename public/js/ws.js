@@ -1,6 +1,6 @@
 var ws;
 var log = function (text) {
-  $('#log').val($('#log').val() + text + "\n");
+  $('#log').val(text + "\n" + $('#log').val() );
 };
 $(function () {
   console.log('Top of function');
@@ -28,9 +28,17 @@ $(function () {
 
   $('#msg').keydown(function (e) {
     if (e.keyCode == 13 && $('#msg').val()) {
-      console.log('ws: ', ws);
+      //console.log('ws: ', ws);
+      console.log('#msg.val(): ', $('#msg').val());
+	  //n = new Date() ;
+	  //hms: n.getHours() + ':' + n.getMinutes() + ':' + n.getSeconds(),
+	  twoSend = {
+	    		author: $('#author').val(),
+				message: $('#msg').val() 
+	  };
       if (ws.readyState == 1) {
-        ws.send($('#msg').val());
+		console.log( 'ws.send: ', JSON.stringify( twoSend ) ) ;
+        ws.send( JSON.stringify( twoSend ) );
         $('#msg').val('');
       } else {
         log('Connection with server is lost');
@@ -56,8 +64,9 @@ function socketinit() {
   };
 
   ws.onmessage = function (msg) {
+    console.log( 'ws.onmessage: ', msg );
     var res = JSON.parse(msg.data);
-    log('[' + res.hms + '] ' + res.text);
+    log(res.author + ' - ' + res.message);
   };
   ws.onclose = function (evt) {
     log('onclose');

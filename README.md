@@ -8,7 +8,7 @@ Perl script client.pl demonstrates a CLI version how to connect to a websocket s
 
 # Code
 
-Controler `example` is in package `lib\Sdc\Controller\Example.pm`.
+Controler `example` is in package `lib/Sdc/Controller/Example.pm`.
 
 ## The mojolicious websocket 
 
@@ -25,7 +25,7 @@ This websocket end-point is in controller `example` :
 The web page code is in template file `templates\example\client.html.ep`
 
 
-Java script code in `public\js\ws.js`
+Java script code in `public/js/ws.js`
 
 ### Apache proxy to hypnotoad server
 
@@ -33,13 +33,22 @@ Java script code in `public\js\ws.js`
 
 * Configure hypnotoad to use non-secure port
 
-Star the hypnotoad server:
+Start the hypnotoad server (production):
 
 ```
 HYPNOLISTEN='http://*:9090' hypnotoad script/sdc
 ```
 
-The hypnotoad server will run on port 9090 and the websocket uses the `ws` protocal.
+or
+
+Start the morbo server (development):
+
+```
+$ morbo -l "http://*:9090" script/sdc 
+```
+
+
+The hypnotoad (or morbo) server will run on port 9090 and the websocket uses the `ws` protocal.
 
 * Apache proxy configuration 
 
